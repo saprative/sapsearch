@@ -1,4 +1,4 @@
-package google
+package models
 
 type GoogleModel struct {
 	Context struct {
