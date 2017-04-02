@@ -2,15 +2,16 @@ package makerequest
 
 import (
 	"encoding/json"
+	//"log"
 	"net/http"
 	"time"
 )
 
 func MakeRequest(url string, structure interface{}) error {
 
-	myclient := &http.Client{Timeout: 10 * time.Second}
+	client := &http.Client{Timeout: 10 * time.Second}
 
-	res, err := myclient.Get(url)
+	res, err := client.Get(url)
 
 	if err != nil {
 		panic(err.Error())
@@ -19,5 +20,12 @@ func MakeRequest(url string, structure interface{}) error {
 	defer res.Body.Close()
 
 	return json.NewDecoder(res.Body).Decode(structure)
+	//out, err := json.Marshal(&structure)
+	//if err != nil {
+	//panic(err)
+	//}
+
+	//log.Printf(string(out))
+	//log.Printf(string(structure))
 
 }
