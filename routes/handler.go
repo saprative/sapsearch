@@ -8,6 +8,7 @@ import (
 	"github.com/saprative/sapsearch/utils"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -39,9 +40,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}()
 
 	go func() {
-		anaconda.SetConsumerKey("mSTKWCzHDUIXTy5hpeQxFcz3X")
-		anaconda.SetConsumerSecret("xWAZZRFn9H3AG3iQFdYzSgA1bq4KMhqhSalHlAi1BvcsFY6kBb")
-		api := anaconda.NewTwitterApi("294750312-ECGKh0GlTU8QarIlhaMi0xLDFsHRlQzNafDiQxxF", "78ZNZhXSKb6QdmPdxSfiICOjZWNrWscTxEPvMgxfSYQ5k")
+		anaconda.SetConsumerKey(os.Getenv("ConsumerKey"))
+		anaconda.SetConsumerSecret(os.Getenv("ConsumerSecret"))
+		api := anaconda.NewTwitterApi(os.Getenv("AccessToken"), os.Getenv("AccessTokenSecret"))
 		searchResult, _ := api.GetSearch(q, nil)
 		tweet := searchResult.Statuses
 
