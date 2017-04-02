@@ -1,10 +1,10 @@
 package routes
 
 import (
-	"../models"
-	"../utils"
 	"encoding/json"
 	"fmt"
+	"github.com/saprative/sapsearch/models"
+	"github.com/saprative/sapsearch/utils"
 	"log"
 	"net/http"
 	"time"

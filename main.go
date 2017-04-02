@@ -1,7 +1,7 @@
 package main
 
 import (
-	"./routes"
+	"github.com/saprative/sapsearch/routes"
 	"log"
 	"net/http"
 	"os"
