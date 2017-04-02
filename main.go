@@ -9,6 +9,6 @@ import (
 func main() {
 	port := ":8001"
 	log.Printf("Listening to port %s", port)
-	http.HandleFunc("/", router.Handler)
+	http.HandleFunc("/", routes.Handler)
 	http.ListenAndServe(port, nil)
 }

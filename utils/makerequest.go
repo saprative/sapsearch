@@ -2,7 +2,7 @@ package makerequest
 
 import (
 	"encoding/json"
-	//"log"
+	"log"
 	"net/http"
 	"time"
 )
@@ -14,18 +14,11 @@ func MakeRequest(url string, structure interface{}) error {
 	res, err := client.Get(url)
 
 	if err != nil {
-		panic(err.Error())
+		log.Printf(err.Error())
 	}
 
 	defer res.Body.Close()
 
 	return json.NewDecoder(res.Body).Decode(structure)
-	//out, err := json.Marshal(&structure)
-	//if err != nil {
-	//panic(err)
-	//}
-
-	//log.Printf(string(out))
-	//log.Printf(string(structure))
 
 }
