@@ -9,7 +9,7 @@ import (
 
 func MakeRequest(url string, structure interface{}) error {
 
-	client := &http.Client{Timeout: 10 * time.Second}
+	client := &http.Client{Timeout: 5 * time.Second}
 
 	res, err := client.Get(url)
 
