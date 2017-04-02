@@ -1,1 +1,1 @@
-web: go_concurrent
+web: go run main
