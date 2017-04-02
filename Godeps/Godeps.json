@@ -2,9 +2,6 @@
 	"ImportPath": "github.com/saprative/sapsearch",
 	"GoVersion": "go1.8",
 	"GodepVersion": "v79",
-	"Packages": [
-		"github.com/ChimeraCoder/anaconda/"
-	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/ChimeraCoder/anaconda",
