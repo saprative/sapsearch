@@ -1,1 +1,1 @@
-web: gosearch
+web: go_concurrent

@@ -1,4 +1,4 @@
-package makerequest
+package utils
 
 import (
 	"encoding/json"
