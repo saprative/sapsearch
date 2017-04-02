@@ -18,10 +18,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	google_ch := make(chan string)
 	duck_ch := make(chan string)
 	twitter_ch := make(chan string)
-
-	Google := new(models.GoogleModel)
-	Duckduckgo := new(models.DuckDuckGoModel)
-	MySearch := new(models.MySearchModel)
+	mysearch_ch := make(chan *models.MySearchModel)
 
 	start := time.Now()
 
@@ -30,11 +27,13 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	twitter_url := "https://api.twitter.com/1.1/search/tweets.json?q=" + q
 
 	go func() {
+		Google := new(models.GoogleModel)
 		utils.MakeRequest(google_url, Google)
 		google_ch <- Google.Items[0].Snippet
 	}()
 
 	go func() {
+		Duckduckgo := new(models.DuckDuckGoModel)
 		utils.MakeRequest(duckduckgo_url, Duckduckgo)
 		duck_ch <- Duckduckgo.RelatedTopics[0].Text
 	}()
@@ -49,14 +48,19 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		twitter_ch <- tweet[0].Text
 	}()
 
-	MySearch.Results.Google.URL = google_url
-	MySearch.Results.Google.Text = <-google_ch
-	MySearch.Results.Duckduckgo.URL = duckduckgo_url
-	MySearch.Results.Duckduckgo.Text = <-duck_ch
-	MySearch.Results.Twitter.URL = twitter_url
-	MySearch.Results.Twitter.Text = <-twitter_ch
+	go func() {
+		MySearch := new(models.MySearchModel)
+		MySearch.Results.Google.URL = google_url
+		MySearch.Results.Google.Text = <-google_ch
+		MySearch.Results.Duckduckgo.URL = duckduckgo_url
+		MySearch.Results.Duckduckgo.Text = <-duck_ch
+		MySearch.Results.Twitter.URL = twitter_url
+		MySearch.Results.Twitter.Text = <-twitter_ch
 
-	out, err := json.Marshal(MySearch)
+		mysearch_ch <- MySearch
+	}()
+
+	out, err := json.Marshal(<-mysearch_ch)
 	if err != nil {
 		panic(err)
 	}
